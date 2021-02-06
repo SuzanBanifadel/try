@@ -12,7 +12,7 @@ class School(models.Model):
 
 class Class(models.Model):
     class_id = models.AutoField(primary_key=True)
-    school_id = models.ForeignKey(School, on_delete=models.CASCADE)
+    school_id = models.ForeignKey(School,related_name="school_classes", on_delete=models.CASCADE)
     class_name = models.CharField(max_length=80)
     created_at = models.DateTimeField("Created At", auto_now_add=True)
     def __str__(self):
@@ -20,8 +20,8 @@ class Class(models.Model):
 
 class Student(models.Model):
     student_id = models.AutoField(primary_key=True)
-    school_id = models.ForeignKey(School, on_delete=models.CASCADE)
-    class_id = models.ForeignKey(Class, on_delete=models.CASCADE)
+    school_id = models.ForeignKey(School, related_name="school_students", on_delete=models.CASCADE)
+    class_id = models.ForeignKey(Class, related_name="class_students", on_delete=models.CASCADE)
     student_name = models.CharField(max_length=100)
     created_at = models.DateTimeField("Created At", auto_now_add=True)
     studentAge = models.IntegerField()
