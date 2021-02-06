@@ -23,6 +23,20 @@ def students_list(request):
     data = {"All Students": list(students.values( "school_id","class_id","student_id","student_name","studentAge", "created_at"))}
     return JsonResponse(data)
 
+#All Classes Of a Specific School        
+def school_classes(request, pk):
+    if request.method == 'GET':
+        school = School.objects.get(pk =pk)
+        schoolClasses =  school.school_classes.all()
+        data = {school.school_name: list(schoolClasses.values("school_id","class_id","class_name", "created_at"))}       
+        return JsonResponse(data)
+#All Students Of a Specific School        
+def school_students(request, pk):
+    if request.method == 'GET':
+        school = School.objects.get(pk =pk)
+        schoolStudents =  school.school_students.all()
+        data = {school.school_name: list(schoolStudents.values("school_id", "class_id", "student_id", "student_name", "studentAge", "created_at"))}       
+        return JsonResponse(data)        
 #Register New Student at a Specific School and a Specific Class
 def register_student(request, pk, pk_class):
     if request.method == 'POST':
